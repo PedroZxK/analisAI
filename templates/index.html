@@ -1,0 +1,182 @@
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnalisAI - Análise Inteligente de Imagens</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+
+  <body>
+    <header class="headerAnalisAI">
+      <div id="content">
+        <nav class="navAnalisAI">
+          <div class="navItensLeft">
+            <img
+              src="{{ url_for('static', filename='img/logo.png') }}"
+              alt="Logo AnalisAI"
+            />
+            <h1>AnalisAI</h1>
+          </div>
+          <div class="navItensRight">
+            <a href="#" class="navLink">Recursos</a>
+            <a href="#" class="navLink">Benefícios</a>
+            <button class="navAnalyticsButton primaryButton">
+              Faça sua Análise
+            </button>
+            <button class="navLoginButton secondaryButton">Entre</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="content">
+      <section id="sectionHero">
+        <div class="heroLeft">
+          <div class="backgroundInfoInfo">
+            <h2>
+              Visão Computacional e IA para a
+              <span class="highlightText">Compreensão Visual</span>
+            </h2>
+            <p>
+              A AnalisAI é a plataforma definitiva de análise de imagens. Usamos
+              inteligência artificial de ponta para oferecer
+              **identificação automática de elementos**, **geração de tags
+              inteligentes** e insights visuais rápidos e precisos.
+            </p>
+            <div class="heroButtons">
+              <button class="primaryButton callToAction">
+                Comece a Analisar Agora!
+              </button>
+              <button class="secondaryButton">Saiba Mais</button>
+            </div>
+          </div>
+        </div>
+        <div class="heroRight">
+          <img
+            src="{{ url_for('static', filename='img/imageInfoRight.png') }}"
+            alt="Análise de Imagem por IA"
+          />
+        </div>
+      </section>
+
+      <section id="sectionFeatures">
+        <div class="sectionHeader">
+          <h2 class="titleFeatures">
+            🚀 Recursos que Transformam sua Análise
+          </h2>
+        </div>
+
+        <div class="backgroundFeatures">
+          <div class="featureCard">
+            <img
+              src="{{ url_for('static', filename='img/tagsImage.png') }}"
+              alt="Tags Image"
+            />
+            <h3>Etiquetagem Automática (Tags)</h3>
+            <p>
+              Identifique automaticamente os elementos da sua imagem com
+              precisão. A AnalisAI gera tags relevantes, facilitando a
+              organização e a busca de conteúdo visual em segundos.
+            </p>
+          </div>
+          <div class="featureCard">
+            <img
+              src="{{ url_for('static', filename='img/sugestionsImage.png') }}"
+              alt="Sugestions Image"
+            />
+            <h3>Sugestões Inteligentes de Contexto</h3>
+            <p>
+              Receba recomendações inteligentes baseadas no contexto da
+              imagem. Nossa IA aprende com seus padrões para aprimorar e refinar
+              seus resultados de análise automaticamente.
+            </p>
+          </div>
+          <div class="featureCard">
+            <img
+              src="{{ url_for('static', filename='img/graphImage.png') }}"
+              alt="Graph Image"
+            />
+            <h3>Insights Acionáveis e Detalhados</h3>
+            <p>
+              Explore insights detalhados sobre suas imagens. Descubra
+              padrões, tendências e informações que impulsionam decisões mais
+              estratégicas e embasadas em dados visuais.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="sectionBenefits">
+        <div class="sectionHeader">
+          <h2 class="titleBenefits">
+            ⭐ Por que a AnalisAI é a Melhor Escolha?
+          </h2>
+        </div>
+
+        <div class="benefitsContent">
+          <div class="sectionBenefitsLeft">
+            <div class="benefitCard">
+              <div class="topBenefit">
+                <img
+                  src="{{ url_for('static', filename='img/fastImage.png') }}"
+                  alt="Fast Image"
+                />
+                <h3>Velocidade Incomparável</h3>
+              </div>
+              <p>
+                Receba resultados em segundos. Nossa análise avançada e
+                reconhecimento de elementos visuais é otimizada para ser a mais
+                rápida do mercado.
+              </p>
+            </div>
+            <div class="benefitCard">
+              <div class="topBenefit">
+                <img
+                  src="{{ url_for('static', filename='img/RobotImage.png') }}"
+                  alt="Robot Image"
+                />
+                <h3>Precisão de IA Avançada</h3>
+              </div>
+              <p>
+                Treinada com milhões de dados, nossa IA entende contextos,
+                objetos, cenas e até emoções presentes na foto com altíssima
+                acurácia.
+              </p>
+            </div>
+          </div>
+          <div class="sectionBenefitsRight">
+            <div class="RightImageBenefits">
+              <img
+                src="{{ url_for('static', filename='img/robotBenefits.png') }}"
+                alt="Robô de Benefícios"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footerAnalisAI">
+      <div class="footerInfo">
+        <img
+          src="{{ url_for('static', filename='img/footerBackground.png') }}"
+          alt="Rodapé de Fundo"
+        />
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 AnalisAI. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>
