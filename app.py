@@ -1,17 +1,26 @@
-# app.py
+from flask import Flask, render_template, jsonify, request
+import requests
 
-# 1. Importa a classe Flask e a função render_template
-from flask import Flask, render_template
-
-# 2. Cria a instância do aplicativo Flask e a atribui à variável 'app'
 app = Flask(__name__)
 
-# 3. Define a rota principal (a URL /)
+# Rota principal - página inicial
 @app.route("/")
 def home():
-    # 4. Retorna a renderização do arquivo 'index.html'
     return render_template("index.html")
 
-# 5. Inicia o servidor, garantindo que 'app' esteja definida
+# Rota para enviar imagem ao microsserviço de análise
+@app.route("/analyze", methods=["POST"])
+def analyze_image():
+    image_url = request.form.get("image_url")
+
+    # Envia requisição para o microsserviço de análise
+    response = requests.post("http://127.0.0.1:5001/analyze", json={"image_url": image_url})
+
+    if response.status_code == 200:
+        return jsonify(response.json())
+    else:
+        return jsonify({"error": "Falha ao analisar a imagem"}), 500
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
