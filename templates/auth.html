@@ -18,103 +18,107 @@
     />
   </head>
   <body>
+    <a href="{{ url_for('home') }}" class="back-to-home-button">
+      &larr; Voltar à Página Inicial
+    </a>
+
     <div
       id="auth-container"
       class="{% if initial_state == 'login' %}login-active{% endif %}"
     >
       <div class="form-wrapper">
-        <div class="form-panel" id="login-form">
-          <form method="POST">
-            <a href="{{ url_for('home') }}" class="auth-logo">
-              <img
-                src="{{ url_for('static', filename='img/logo.png') }}"
-                alt="Logo AnalisAI"
+        <div class="form-panel-wrapper">
+          <div class="form-panel" id="login-form">
+            <form method="POST">
+              <a href="{{ url_for('home') }}" class="auth-logo">
+                <img
+                  src="{{ url_for('static', filename='img/logo.png') }}"
+                  alt="Logo AnalisAI"
+                />
+                <span>AnalisAI</span>
+              </a>
+
+              <h1 class="form-title-login">Acesse sua Conta</h1>
+
+              <label for="login-email">E-mail:</label>
+              <input
+                type="email"
+                id="login-email"
+                name="email"
+                placeholder="Digite seu e-mail"
+                required
               />
-              <span>AnalisAI</span>
-            </a>
 
-            <h1>Entre na sua Conta</h1>
-            <p class="subheading">
-              Comece a transformar suas imagens em insights.
-            </p>
-            <label for="login-email">E-mail:</label>
-            <input
-              type="email"
-              id="login-email"
-              name="email"
-              placeholder="Digite seu e-mail"
-              required
-            />
-
-            <label for="login-password">Senha:</label>
-            <input
-              type="password"
-              id="login-password"
-              name="password"
-              placeholder="Digite sua senha"
-              required
-            />
-
-            <button type="submit" class="primaryButton">Entrar</button>
-
-            <div class="toggle-link">
-              Novo por aqui?
-              <a href="#" id="toggleToCadastro">Crie uma conta.</a>
-            </div>
-          </form>
-        </div>
-
-        <div class="form-panel" id="cadastro-form">
-          <form method="POST">
-            <a href="{{ url_for('home') }}" class="auth-logo">
-              <img
-                src="{{ url_for('static', filename='img/logo.png') }}"
-                alt="Logo AnalisAI"
+              <label for="login-password">Senha:</label>
+              <input
+                type="password"
+                id="login-password"
+                name="password"
+                placeholder="Digite sua senha"
+                required
               />
-              <span>AnalisAI</span>
-            </a>
 
-            <h1>Crie sua Conta</h1>
-            <p class="subheading">
-              Comece a transformar suas imagens em insights.
-            </p>
+              <button type="submit" class="primaryButton">Entrar</button>
 
-            <label for="name">Nome:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Digite seu nome completo"
-              required
-            />
+              <div class="toggle-link">
+                Novo por aqui?
+                <a href="#" id="toggleToCadastro">Crie uma conta.</a>
+              </div>
+            </form>
+          </div>
 
-            <label for="cadastro-email">E-mail:</label>
-            <input
-              type="email"
-              id="cadastro-email"
-              name="email"
-              placeholder="Digite seu melhor e-mail"
-              required
-            />
+          <div class="form-panel" id="cadastro-form">
+            <form method="POST">
+              <a href="{{ url_for('home') }}" class="auth-logo">
+                <img
+                  src="{{ url_for('static', filename='img/logo.png') }}"
+                  alt="Logo AnalisAI"
+                />
+                <span>AnalisAI</span>
+              </a>
 
-            <label for="cadastro-password">Senha:</label>
-            <input
-              type="password"
-              id="cadastro-password"
-              name="password"
-              placeholder="Crie uma senha forte"
-              required
-            />
+              <h1>Crie sua Conta</h1>
+              <p class="subheading">
+                Comece a transformar suas imagens em insights.
+              </p>
 
-            <button type="submit" class="primaryButton">
-              Finalizar Cadastro
-            </button>
+              <label for="name">Nome:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Digite seu nome completo"
+                required
+              />
 
-            <div class="toggle-link">
-              Já tem uma conta?
-              <a href="#" id="toggleToLogin">Entre aqui.</a>
-            </div>
-          </form>
+              <label for="cadastro-email">E-mail:</label>
+              <input
+                type="email"
+                id="cadastro-email"
+                name="email"
+                placeholder="Digite seu melhor e-mail"
+                required
+              />
+
+              <label for="cadastro-password">Senha:</label>
+              <input
+                type="password"
+                id="cadastro-password"
+                name="password"
+                placeholder="Crie uma senha forte"
+                required
+              />
+
+              <button type="submit" class="primaryButton">
+                Finalizar Cadastro
+              </button>
+
+              <div class="toggle-link">
+                Já tem uma conta?
+                <a href="#" id="toggleToLogin">Entre aqui.</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -132,18 +136,18 @@
     </div>
 
     <script>
-      const authContainer = document.getElementById("auth-container");
-      const toggleToLogin = document.getElementById("toggleToLogin");
-      const toggleToCadastro = document.getElementById("toggleToCadastro");
+      const authContainer = document.getElementById('auth-container');
+      const toggleToLogin = document.getElementById('toggleToLogin');
+      const toggleToCadastro = document.getElementById('toggleToCadastro');
 
-      toggleToLogin.addEventListener("click", (e) => {
+      toggleToLogin.addEventListener('click', (e) => {
         e.preventDefault();
-        authContainer.classList.add("login-active");
+        authContainer.classList.add('login-active');
       });
 
-      toggleToCadastro.addEventListener("click", (e) => {
+      toggleToCadastro.addEventListener('click', (e) => {
         e.preventDefault();
-        authContainer.classList.remove("login-active");
+        authContainer.classList.remove('login-active');
       });
     </script>
   </body>
