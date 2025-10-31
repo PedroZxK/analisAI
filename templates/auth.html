@@ -4,14 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AnalisAI - Autenticação</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
-
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='auth.css') }}"
@@ -22,22 +20,23 @@
       &larr; Voltar à Página Inicial
     </a>
 
+    <div id="toast-notification" class="toast"></div>
+
     <div
       id="auth-container"
       class="{% if initial_state == 'login' %}login-active{% endif %}"
     >
       <div class="form-wrapper">
         <div class="form-panel-wrapper">
+          
           <div class="form-panel" id="login-form">
-            <form method="POST">
-              <a href="{{ url_for('home') }}" class="auth-logo">
+            <form id="login-form-element"> <a href="{{ url_for('home') }}" class="auth-logo">
                 <img
                   src="{{ url_for('static', filename='img/logo.png') }}"
                   alt="Logo AnalisAI"
                 />
                 <span>AnalisAI</span>
               </a>
-
               <h1 class="form-title-login">Acesse sua Conta</h1>
 
               <label for="login-email">E-mail:</label>
@@ -48,7 +47,6 @@
                 placeholder="Digite seu e-mail"
                 required
               />
-
               <label for="login-password">Senha:</label>
               <input
                 type="password"
@@ -57,9 +55,8 @@
                 placeholder="Digite sua senha"
                 required
               />
-
               <button type="submit" class="primaryButton">Entrar</button>
-
+              
               <div class="toggle-link">
                 Novo por aqui?
                 <a href="#" id="toggleToCadastro">Crie uma conta.</a>
@@ -68,29 +65,26 @@
           </div>
 
           <div class="form-panel" id="cadastro-form">
-            <form method="POST">
-              <a href="{{ url_for('home') }}" class="auth-logo">
+            <form id="cadastro-form-element"> <a href="{{ url_for('home') }}" class="auth-logo">
                 <img
                   src="{{ url_for('static', filename='img/logo.png') }}"
                   alt="Logo AnalisAI"
                 />
                 <span>AnalisAI</span>
               </a>
-
               <h1>Crie sua Conta</h1>
               <p class="subheading">
-                Comece a transformar suas imagens em insights.
+                Tansforme suas imagens em insights!
               </p>
 
               <label for="name">Nome:</label>
               <input
                 type="text"
-                id="name"
+                id="cadastro-name"
                 name="name"
                 placeholder="Digite seu nome completo"
                 required
               />
-
               <label for="cadastro-email">E-mail:</label>
               <input
                 type="email"
@@ -99,20 +93,26 @@
                 placeholder="Digite seu melhor e-mail"
                 required
               />
-
               <label for="cadastro-password">Senha:</label>
               <input
                 type="password"
                 id="cadastro-password"
                 name="password"
-                placeholder="Crie uma senha forte"
+                placeholder="Crie uma senha (mín. 6 caracteres)"
                 required
               />
-
+              <label for="confirm-password">Confirmar Senha:</label>
+              <input
+                type="password"
+                id="confirm-password"
+                name="confirmPassword"
+                placeholder="Confirme sua senha"
+                required
+              />
               <button type="submit" class="primaryButton">
                 Finalizar Cadastro
               </button>
-
+              
               <div class="toggle-link">
                 Já tem uma conta?
                 <a href="#" id="toggleToLogin">Entre aqui.</a>
@@ -135,7 +135,28 @@
       </div>
     </div>
 
-    <script>
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        updateProfile,
+      } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+      const firebaseConfig = {
+        apiKey: 'AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio',
+        authDomain: 'analisai-d3a91.firebaseapp.com',
+        projectId: 'analisai-d3a91',
+        storageBucket: 'analisai-d3a91.firebasestorage.app',
+        messagingSenderId: '981537129539',
+        appId: '1:981537129539:web:49640a2dc79faacb2380f6',
+        measurementId: 'G-P9PVFS2L5S',
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
       const authContainer = document.getElementById('auth-container');
       const toggleToLogin = document.getElementById('toggleToLogin');
       const toggleToCadastro = document.getElementById('toggleToCadastro');
@@ -148,6 +169,89 @@
       toggleToCadastro.addEventListener('click', (e) => {
         e.preventDefault();
         authContainer.classList.remove('login-active');
+      });
+
+      const loginForm = document.getElementById('login-form-element');
+      const cadastroForm = document.getElementById('cadastro-form-element');
+      const toast = document.getElementById('toast-notification');
+      let toastTimer;
+
+      function showToast(message, type = 'error') {
+        clearTimeout(toastTimer);
+        
+        toast.textContent = message;
+        toast.classList.remove('success', 'error');
+        toast.classList.add(type);
+        toast.classList.add('show');
+
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      function getFirebaseErrorMessage(error) {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            return 'O e-mail digitado não é válido.';
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
+            return 'E-mail ou senha incorretos.';
+          case 'auth/email-already-in-use':
+            return 'Este e-mail já está em uso.';
+          case 'auth/weak-password':
+            return 'A senha é muito fraca (mín. 6 caracteres).';
+          default:
+            return 'Ocorreu um erro. Tente novamente.';
+        }
+      }
+
+      cadastroForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('cadastro-name').value;
+        const email = document.getElementById('cadastro-email').value;
+        const password = document.getElementById('cadastro-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+          showToast('As senhas não conferem.');
+          return;
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            return updateProfile(userCredential.user, {
+              displayName: name,
+            });
+          })
+          .then(() => {
+            showToast('Conta criada com sucesso! Faça o login.', 'success');
+            authContainer.classList.add('login-active');
+            cadastroForm.reset();
+          })
+          .catch((error) => {
+            showToast(getFirebaseErrorMessage(error));
+          });
+      });
+
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            showToast('Login efetuado! Redirecionando...', 'success');
+            
+            setTimeout(() => {
+              window.location.href = '/upload';
+            }, 1500);
+          })
+          .catch((error) => {
+            showToast(getFirebaseErrorMessage(error));
+          });
       });
     </script>
   </body>

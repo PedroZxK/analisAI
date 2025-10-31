@@ -26,6 +26,9 @@ def analyze_image():
     else:
         return jsonify({"error": "Falha ao analisar a imagem"}), 500
 
+@app.route("/upload")
+def upload():
+    return render_template("upload.html")
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

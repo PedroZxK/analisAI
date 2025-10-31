@@ -5,6 +5,8 @@
   --background-light: #f4f7f9;
   --text-dark: #333333;
   --text-light: #ffffff;
+  --error-color: #d93025;
+  --success-color: #1e8e3e;
 }
 
 * {
@@ -21,6 +23,37 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+}
+
+.toast {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translate(-50%, -100px);
+  padding: 14px 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  font-size: 1em;
+  font-weight: 600;
+  color: #fff;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.21, 1.02, 0.73, 1);
+}
+
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.toast.success {
+  background-color: var(--success-color);
+}
+
+.toast.error {
+  background-color: var(--error-color);
 }
 
 .back-to-home-button {
@@ -278,6 +311,11 @@ body {
 @media (max-width: 900px) {
   .back-to-home-button {
     display: none;
+  }
+
+  .toast {
+    top: 10px;
+    width: 90%;
   }
 
   #auth-container {

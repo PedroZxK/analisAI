@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AnalisAI - Fazer Upload</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  />
+</head>
+<body>
+  <header class="headerAnalisAI">
+    <div id="content">
+      <nav class="navAnalisAI">
+        <div class="navItensLeft">
+          <img
+            src="{{ url_for('static', filename='img/logo.png') }}"
+            alt="Logo AnalisAI"
+          />
+          <h1>AnalisAI</h1>
+        </div>
+        <div class="navItensRight">
+          <button id="logoutButton" class="secondaryButton">Sair</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content">
+    <h1>Página de Upload</h1>
+    <p>Olá, <span id="user-name">...</span>! Você está logado.</p>
+    </main>
+
+  <script type="module">
+    // ADAPTE A VERSÃO SE NECESSÁRIO
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+    // !! USE A SUA NOVA CONFIGURAÇÃO DO FIREBASE AQUI !!
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio',
+      authDomain: 'analisai-d3a91.firebaseapp.com',
+      projectId: 'analisai-d3a91',
+      storageBucket: 'analisai-d3a91.firebasestorage.app',
+      messagingSenderId: '981537129539',
+      appId: '1:981537129539:web:49640a2dc79faacb2380f6',
+      measurementId: 'G-P9PVFS2L5S',
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ---- LÓGICA DESTA PÁGINA ----
+
+    const userNameSpan = document.getElementById('user-name');
+    const logoutButton = document.getElementById('logoutButton');
+
+    // Monitora o estado da autenticação
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Usuário está logado
+        console.log('Usuário logado:', user);
+        userNameSpan.textContent = user.displayName || user.email;
+      } else {
+        // Usuário não está logado, redireciona para o login
+        console.log('Nenhum usuário logado, redirecionando...');
+        window.location.href = '/login';
+      }
+    });
+
+    // Ação do botão de Sair
+    logoutButton.addEventListener('click', () => {
+      signOut(auth)
+        .then(() => {
+          // Redireciona para a home
+          window.location.href = '/';
+        })
+        .catch((error) => {
+          console.error('Erro ao fazer logout:', error);
+        });
+    });
+  </script>
+</body>
+</html>
