@@ -33,6 +33,10 @@
               <span>AnalisAI</span>
             </a>
 
+            <h1>Entre na sua Conta</h1>
+            <p class="subheading">
+              Comece a transformar suas imagens em insights.
+            </p>
             <label for="login-email">E-mail:</label>
             <input
               type="email"
@@ -128,18 +132,18 @@
     </div>
 
     <script>
-      const authContainer = document.getElementById('auth-container');
-      const toggleToLogin = document.getElementById('toggleToLogin');
-      const toggleToCadastro = document.getElementById('toggleToCadastro');
+      const authContainer = document.getElementById("auth-container");
+      const toggleToLogin = document.getElementById("toggleToLogin");
+      const toggleToCadastro = document.getElementById("toggleToCadastro");
 
-      toggleToLogin.addEventListener('click', (e) => {
+      toggleToLogin.addEventListener("click", (e) => {
         e.preventDefault();
-        authContainer.classList.add('login-active');
+        authContainer.classList.add("login-active");
       });
 
-      toggleToCadastro.addEventListener('click', (e) => {
+      toggleToCadastro.addEventListener("click", (e) => {
         e.preventDefault();
-        authContainer.classList.remove('login-active');
+        authContainer.classList.remove("login-active");
       });
     </script>
   </body>
