@@ -8,6 +8,11 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='img/logo.png') }}"
+    />
   </head>
   <body>
     <header class="headerAnalisAI">
@@ -32,22 +37,30 @@
         <h1>Bem-vindo, <span id="user-name">...</span>!</h1>
         <p>Vamos analisar sua imagem.</p>
       </div>
-      
+
       <div id="upload-container" class="upload-container initial-state">
-        
         <div id="upload-box">
           <input type="file" id="file-input" hidden accept="image/*" />
-          
+
           <label for="file-input" id="upload-drop-zone">
-            
             <div id="upload-prompt">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04ZM14 13V17H10V13H7L12 8L17 13H14Z" fill="#143b61"/></svg>
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04ZM14 13V17H10V13H7L12 8L17 13H14Z"
+                  fill="#143b61"
+                />
+              </svg>
               <h3>Arraste e solte sua imagem</h3>
               <p>ou clique para selecionar (PNG, JPG)</p>
             </div>
-            
-            <img id="image-preview" src="#" alt="Prévia da Imagem" />
 
+            <img id="image-preview" src="#" alt="Prévia da Imagem" />
           </label>
         </div>
 
@@ -58,8 +71,7 @@
 
         <div id="upload-results">
           <h3>Resultados da Análise</h3>
-          <div class="tags-wrapper" id="tags-container">
-          </div>
+          <div class="tags-wrapper" id="tags-container"></div>
           <h4>Descrição Detalhada:</h4>
           <p id="description-text"></p>
         </div>
@@ -72,29 +84,28 @@
             Nova Análise
           </button>
         </div>
-
       </div>
     </main>
 
     <script type="module">
       // --- SDKs DO FIREBASE (APENAS AUTENTICAÇÃO) ---
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import {
         getAuth,
         onAuthStateChanged,
         signOut,
-      } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
       // SDK do Storage foi REMOVIDO
 
       // --- CONFIGURAÇÃO DO FIREBASE ---
       const firebaseConfig = {
-        apiKey: 'AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio', // !! LEMBRE-SE DE TROCAR PELA SUA NOVA CHAVE !!
-        authDomain: 'analisai-d3a91.firebaseapp.com',
-        projectId: 'analisai-d3a91',
-        storageBucket: 'analisai-d3a91.firebasestorage.app',
-        messagingSenderId: '981537129539',
-        appId: '1:981537129539:web:49640a2dc79faacb2380f6',
-        measurementId: 'G-P9PVFS2L5S',
+        apiKey: "AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio", // !! LEMBRE-SE DE TROCAR PELA SUA NOVA CHAVE !!
+        authDomain: "analisai-d3a91.firebaseapp.com",
+        projectId: "analisai-d3a91",
+        storageBucket: "analisai-d3a91.firebasestorage.app",
+        messagingSenderId: "981537129539",
+        appId: "1:981537129539:web:49640a2dc79faacb2380f6",
+        measurementId: "G-P9PVFS2L5S",
       };
 
       // --- INICIALIZAÇÃO ---
@@ -103,53 +114,53 @@
       // 'storage' foi REMOVIDO
 
       // --- LÓGICA DE AUTENTICAÇÃO (Login/Logout) ---
-      const userNameSpan = document.getElementById('user-name');
-      const logoutButton = document.getElementById('logoutButton');
-      let currentFile = null; 
-      let currentUser = null; 
+      const userNameSpan = document.getElementById("user-name");
+      const logoutButton = document.getElementById("logoutButton");
+      let currentFile = null;
+      let currentUser = null;
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
           currentUser = user;
           userNameSpan.textContent = user.displayName || user.email;
         } else {
-          window.location.href = '/login';
+          window.location.href = "/login";
         }
       });
 
-      logoutButton.addEventListener('click', () => {
+      logoutButton.addEventListener("click", () => {
         signOut(auth).then(() => {
-          window.location.href = '/';
+          window.location.href = "/";
         });
       });
 
       // --- LÓGICA DA PÁGINA DE UPLOAD ---
 
       // Elementos da UI
-      const uploadContainer = document.getElementById('upload-container');
-      const fileInput = document.getElementById('file-input');
-      const dropZone = document.getElementById('upload-drop-zone');
-      const preview = document.getElementById('image-preview');
-      const analyzeButton = document.getElementById('analyze-button');
-      const newAnalysisButton = document.getElementById('new-analysis-button');
-      const loadingSpinner = document.getElementById('loading-spinner');
-      const tagsContainer = document.getElementById('tags-container');
-      const descriptionText = document.getElementById('description-text');
-      const resultsContainer = document.getElementById('upload-results');
-      
+      const uploadContainer = document.getElementById("upload-container");
+      const fileInput = document.getElementById("file-input");
+      const dropZone = document.getElementById("upload-drop-zone");
+      const preview = document.getElementById("image-preview");
+      const analyzeButton = document.getElementById("analyze-button");
+      const newAnalysisButton = document.getElementById("new-analysis-button");
+      const loadingSpinner = document.getElementById("loading-spinner");
+      const tagsContainer = document.getElementById("tags-container");
+      const descriptionText = document.getElementById("description-text");
+      const resultsContainer = document.getElementById("upload-results");
+
       // Função para mudar o estado da UI
       function setUIState(state) {
-        uploadContainer.className = 'upload-container ' + state;
+        uploadContainer.className = "upload-container " + state;
       }
 
       // Lidar com o arquivo (seja por clique ou arrastar)
       function handleFileSelect(file) {
-        if (!file || !file.type.startsWith('image/')) {
-          alert('Por favor, selecione um arquivo de imagem válido (PNG, JPG).');
+        if (!file || !file.type.startsWith("image/")) {
+          alert("Por favor, selecione um arquivo de imagem válido (PNG, JPG).");
           return;
         }
-        
-        currentFile = file; 
+
+        currentFile = file;
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -157,90 +168,91 @@
         };
         reader.readAsDataURL(file);
 
-        setUIState('file-selected');
+        setUIState("file-selected");
         analyzeButton.disabled = false;
       }
 
       // Evento de clique no "quadradão"
-      fileInput.addEventListener('change', (e) => {
+      fileInput.addEventListener("change", (e) => {
         handleFileSelect(e.target.files[0]);
       });
 
       // Eventos de Arrastar e Soltar (Drag & Drop)
-      dropZone.addEventListener('dragover', (e) => {
+      dropZone.addEventListener("dragover", (e) => {
         e.preventDefault();
-        dropZone.classList.add('drag-over');
+        dropZone.classList.add("drag-over");
       });
-      dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('drag-over');
+      dropZone.addEventListener("dragleave", () => {
+        dropZone.classList.remove("drag-over");
       });
-      dropZone.addEventListener('drop', (e) => {
+      dropZone.addEventListener("drop", (e) => {
         e.preventDefault();
-        dropZone.classList.remove('drag-over');
+        dropZone.classList.remove("drag-over");
         handleFileSelect(e.dataTransfer.files[0]);
       });
 
       // =========================================================
       // MUDANÇA PRINCIPAL AQUI: Evento do Botão "Analisar Imagem"
       // =========================================================
-      analyzeButton.addEventListener('click', async () => {
+      analyzeButton.addEventListener("click", async () => {
         if (!currentFile || !currentUser) return;
-        
-        setUIState('loading-state'); // Mostra o loading
+
+        setUIState("loading-state"); // Mostra o loading
 
         try {
           // 1. Criar FormData e adicionar o arquivo
           const formData = new FormData();
           // 'image_file' deve ser o mesmo nome da chave em app.py
-          formData.append('image_file', currentFile); 
+          formData.append("image_file", currentFile);
 
           // 2. Enviar o arquivo para o backend (Flask) na nova rota
-          const response = await fetch('/process-image-upload', {
-            method: 'POST',
+          const response = await fetch("/process-image-upload", {
+            method: "POST",
             body: formData, // Envia o arquivo, não JSON
           });
-          
+
           if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.error || 'Falha na requisição ao servidor.');
+            throw new Error(
+              errorData.error || "Falha na requisição ao servidor."
+            );
           }
 
           // 3. Receber e mostrar os resultados
           const data = await response.json();
           displayResults(data.tags, data.description);
-
         } catch (error) {
-          console.error('Erro no processo de análise:', error);
+          console.error("Erro no processo de análise:", error);
           alert(`Houve um erro: ${error.message}`);
-          setUIState('file-selected'); // Volta para o estado anterior
+          setUIState("file-selected"); // Volta para o estado anterior
         }
       });
-      
+
       // Função para mostrar os resultados
       function displayResults(tags, description) {
-        tagsContainer.innerHTML = ''; 
-        
-        tags.forEach(tag => {
-          const tagElement = document.createElement('span');
-          tagElement.className = 'tag-item';
+        tagsContainer.innerHTML = "";
+
+        tags.forEach((tag) => {
+          const tagElement = document.createElement("span");
+          tagElement.className = "tag-item";
           tagElement.textContent = tag;
           tagsContainer.appendChild(tagElement);
         });
 
-        descriptionText.textContent = description || "Nenhuma descrição detalhada foi gerada.";
-        
-        setUIState('results-state');
+        descriptionText.textContent =
+          description || "Nenhuma descrição detalhada foi gerada.";
+
+        setUIState("results-state");
       }
 
       // Evento do Botão "Nova Análise"
-      newAnalysisButton.addEventListener('click', () => {
-        setUIState('initial-state');
+      newAnalysisButton.addEventListener("click", () => {
+        setUIState("initial-state");
         currentFile = null;
-        fileInput.value = ''; 
-        preview.src = '#';
+        fileInput.value = "";
+        preview.src = "#";
         analyzeButton.disabled = true;
       });
-
     </script>
   </body>
 </html>

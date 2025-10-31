@@ -7,6 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='img/logo.png') }}"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
@@ -85,9 +90,7 @@
 
       <section id="sectionFeatures">
         <div class="sectionHeader">
-          <h2 class="titleFeatures">
-            🚀 Recursos que Transformam sua Análise
-          </h2>
+          <h2 class="titleFeatures">🚀 Recursos que Transformam sua Análise</h2>
         </div>
 
         <div class="backgroundFeatures">
@@ -193,12 +196,12 @@
     </footer>
 
     <script>
-      window.addEventListener('scroll', function () {
-        const header = document.querySelector('.headerAnalisAI');
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector(".headerAnalisAI");
         if (window.scrollY > 50) {
-          header.classList.add('header-scrolled');
+          header.classList.add("header-scrolled");
         } else {
-          header.classList.remove('header-scrolled');
+          header.classList.remove("header-scrolled");
         }
       });
     </script>
