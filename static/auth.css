@@ -1,4 +1,3 @@
-/* --- 1. Importação e Globais --- */
 :root {
   --primary-color: #1172ce;
   --secondary-color: #143b61;
@@ -12,7 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -24,7 +23,6 @@ body {
   padding: 20px;
 }
 
-/* --- 2. Estilos dos Botões (Copiado de style.css) --- */
 .primaryButton {
   padding: 14px 20px;
   border: none;
@@ -49,7 +47,6 @@ body {
   box-shadow: 0 6px 15px rgba(17, 114, 206, 0.6);
 }
 
-/* --- 3. Container Principal de Autenticação --- */
 #auth-container {
   width: 100%;
   max-width: 1000px;
@@ -59,13 +56,9 @@ body {
   border-radius: 16px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
   position: relative;
-  overflow: hidden; /* Essencial para a animação */
+  overflow: hidden;
 }
 
-/* --- 4. MUDANÇA NA LÓGICA DE LAYOUT ---
-   Os dois painéis agora são 'absolute' para
-   que possamos movê-los livremente.
-*/
 .form-wrapper,
 .image-panel {
   position: absolute;
@@ -77,15 +70,15 @@ body {
 
 .form-wrapper {
   left: 0;
-  z-index: 10; /* Formulários ficam na frente */
+  z-index: 10;
   display: flex;
-  align-items: center; /* Centraliza verticalmente o wrapper */
+  align-items: center;
   padding: 50px;
 }
 
 .image-panel {
   left: 50%;
-  z-index: 5; /* Imagem fica atrás */
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,9 +93,6 @@ body {
   );
 }
 
-/* --- 5. Estilos dos Formulários (Interno) --- */
-
-/* Wrapper interno para os dois formulários */
 .form-panel-wrapper {
   width: 100%;
   position: relative;
@@ -229,10 +219,6 @@ body {
   }
 }
 
-/* --- 6. A NOVA ANIMAÇÃO "FLIP" ---
-*/
-
-/* Estado Padrão (Cadastro Visível) */
 #login-form {
   opacity: 0;
   z-index: 5;
@@ -242,24 +228,16 @@ body {
   z-index: 10;
 }
 
-/* Estado .login-active (Login Visível) */
-
 #auth-container.login-active .form-wrapper {
-  /* O painel do formulário (que estava na esquerda)
-     move 100% (do seu próprio tamanho) para a DIREITA. */
   transform: translateX(100%);
   z-index: 10;
 }
 
 #auth-container.login-active .image-panel {
-  /* O painel da imagem (que estava na direita)
-     move 100% (do seu próprio tamanho) para a ESQUERDA. */
   transform: translateX(-100%);
-  z-index: 15; /* Sobe o z-index para passar na frente */
+  z-index: 15;
 }
 
-/* Ao mesmo tempo, o conteúdo dentro do 
-   .form-wrapper (que agora está na DIREITA) troca: */
 #auth-container.login-active #login-form {
   opacity: 1;
   z-index: 10;
@@ -269,7 +247,6 @@ body {
   z-index: 5;
 }
 
-/* --- 7. Responsividade (Sem alteração) --- */
 @media (max-width: 900px) {
   #auth-container {
     max-width: 500px;
@@ -284,7 +261,7 @@ body {
 
   .form-wrapper {
     width: 100%;
-    position: static; /* Remove o 'absolute' */
+    position: static;
     transform: none !important;
     padding: 50px 30px;
   }
