@@ -1,89 +1,246 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AnalisAI - Fazer Upload</title>
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}"
-  />
-</head>
-<body>
-  <header class="headerAnalisAI">
-    <div id="content">
-      <nav class="navAnalisAI">
-        <div class="navItensLeft">
-          <img
-            src="{{ url_for('static', filename='img/logo.png') }}"
-            alt="Logo AnalisAI"
-          />
-          <h1>AnalisAI</h1>
-        </div>
-        <div class="navItensRight">
-          <button id="logoutButton" class="secondaryButton">Sair</button>
-        </div>
-      </nav>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnalisAI - Fazer Upload</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="headerAnalisAI">
+      <div id="content">
+        <nav class="navAnalisAI">
+          <div class="navItensLeft">
+            <img
+              src="{{ url_for('static', filename='img/logo.png') }}"
+              alt="Logo AnalisAI"
+            />
+            <h1>AnalisAI</h1>
+          </div>
+          <div class="navItensRight">
+            <button id="logoutButton" class="secondaryButton">Sair</button>
+          </div>
+        </nav>
+      </div>
+    </header>
 
-  <main id="content">
-    <h1>Página de Upload</h1>
-    <p>Olá, <span id="user-name">...</span>! Você está logado.</p>
+    <main id="content" class="upload-page-content">
+      <div class="welcome-header">
+        <h1>Bem-vindo, <span id="user-name">...</span>!</h1>
+        <p>Vamos analisar sua imagem.</p>
+      </div>
+      
+      <div id="upload-container" class="upload-container initial-state">
+        
+        <div id="upload-box">
+          <input type="file" id="file-input" hidden accept="image/*" />
+          
+          <label for="file-input" id="upload-drop-zone">
+            
+            <div id="upload-prompt">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4C9.11 4 6.6 5.64 5.35 8.04C2.34 8.36 0 10.91 0 14C0 17.31 2.69 20 6 20H19C21.76 20 24 17.76 24 15C24 12.36 21.95 10.22 19.35 10.04ZM14 13V17H10V13H7L12 8L17 13H14Z" fill="#143b61"/></svg>
+              <h3>Arraste e solte sua imagem</h3>
+              <p>ou clique para selecionar (PNG, JPG)</p>
+            </div>
+            
+            <img id="image-preview" src="#" alt="Prévia da Imagem" />
+
+          </label>
+        </div>
+
+        <div id="loading-spinner" class="spinner-wrapper">
+          <div class="spinner"></div>
+          <p>Analisando sua imagem... Isso pode levar um momento.</p>
+        </div>
+
+        <div id="upload-results">
+          <h3>Resultados da Análise</h3>
+          <div class="tags-wrapper" id="tags-container">
+          </div>
+          <h4>Descrição Detalhada:</h4>
+          <p id="description-text"></p>
+        </div>
+
+        <div class="upload-actions">
+          <button id="analyze-button" class="primaryButton" disabled>
+            Analisar Imagem
+          </button>
+          <button id="new-analysis-button" class="secondaryButton">
+            Nova Análise
+          </button>
+        </div>
+
+      </div>
     </main>
 
-  <script type="module">
-    // ADAPTE A VERSÃO SE NECESSÁRIO
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut,
-    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    <script type="module">
+      // --- SDKs DO FIREBASE (APENAS AUTENTICAÇÃO) ---
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+      // SDK do Storage foi REMOVIDO
 
-    // !! USE A SUA NOVA CONFIGURAÇÃO DO FIREBASE AQUI !!
-    const firebaseConfig = {
-      apiKey: 'AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio',
-      authDomain: 'analisai-d3a91.firebaseapp.com',
-      projectId: 'analisai-d3a91',
-      storageBucket: 'analisai-d3a91.firebasestorage.app',
-      messagingSenderId: '981537129539',
-      appId: '1:981537129539:web:49640a2dc79faacb2380f6',
-      measurementId: 'G-P9PVFS2L5S',
-    };
+      // --- CONFIGURAÇÃO DO FIREBASE ---
+      const firebaseConfig = {
+        apiKey: 'AIzaSyDGuPUo5PjS4MyVTK4yQGRwlZ5FFllPsio', // !! LEMBRE-SE DE TROCAR PELA SUA NOVA CHAVE !!
+        authDomain: 'analisai-d3a91.firebaseapp.com',
+        projectId: 'analisai-d3a91',
+        storageBucket: 'analisai-d3a91.firebasestorage.app',
+        messagingSenderId: '981537129539',
+        appId: '1:981537129539:web:49640a2dc79faacb2380f6',
+        measurementId: 'G-P9PVFS2L5S',
+      };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+      // --- INICIALIZAÇÃO ---
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      // 'storage' foi REMOVIDO
 
-    // ---- LÓGICA DESTA PÁGINA ----
+      // --- LÓGICA DE AUTENTICAÇÃO (Login/Logout) ---
+      const userNameSpan = document.getElementById('user-name');
+      const logoutButton = document.getElementById('logoutButton');
+      let currentFile = null; 
+      let currentUser = null; 
 
-    const userNameSpan = document.getElementById('user-name');
-    const logoutButton = document.getElementById('logoutButton');
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          currentUser = user;
+          userNameSpan.textContent = user.displayName || user.email;
+        } else {
+          window.location.href = '/login';
+        }
+      });
 
-    // Monitora o estado da autenticação
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Usuário está logado
-        console.log('Usuário logado:', user);
-        userNameSpan.textContent = user.displayName || user.email;
-      } else {
-        // Usuário não está logado, redireciona para o login
-        console.log('Nenhum usuário logado, redirecionando...');
-        window.location.href = '/login';
-      }
-    });
-
-    // Ação do botão de Sair
-    logoutButton.addEventListener('click', () => {
-      signOut(auth)
-        .then(() => {
-          // Redireciona para a home
+      logoutButton.addEventListener('click', () => {
+        signOut(auth).then(() => {
           window.location.href = '/';
-        })
-        .catch((error) => {
-          console.error('Erro ao fazer logout:', error);
         });
-    });
-  </script>
-</body>
+      });
+
+      // --- LÓGICA DA PÁGINA DE UPLOAD ---
+
+      // Elementos da UI
+      const uploadContainer = document.getElementById('upload-container');
+      const fileInput = document.getElementById('file-input');
+      const dropZone = document.getElementById('upload-drop-zone');
+      const preview = document.getElementById('image-preview');
+      const analyzeButton = document.getElementById('analyze-button');
+      const newAnalysisButton = document.getElementById('new-analysis-button');
+      const loadingSpinner = document.getElementById('loading-spinner');
+      const tagsContainer = document.getElementById('tags-container');
+      const descriptionText = document.getElementById('description-text');
+      const resultsContainer = document.getElementById('upload-results');
+      
+      // Função para mudar o estado da UI
+      function setUIState(state) {
+        uploadContainer.className = 'upload-container ' + state;
+      }
+
+      // Lidar com o arquivo (seja por clique ou arrastar)
+      function handleFileSelect(file) {
+        if (!file || !file.type.startsWith('image/')) {
+          alert('Por favor, selecione um arquivo de imagem válido (PNG, JPG).');
+          return;
+        }
+        
+        currentFile = file; 
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        setUIState('file-selected');
+        analyzeButton.disabled = false;
+      }
+
+      // Evento de clique no "quadradão"
+      fileInput.addEventListener('change', (e) => {
+        handleFileSelect(e.target.files[0]);
+      });
+
+      // Eventos de Arrastar e Soltar (Drag & Drop)
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('drag-over');
+      });
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        handleFileSelect(e.dataTransfer.files[0]);
+      });
+
+      // =========================================================
+      // MUDANÇA PRINCIPAL AQUI: Evento do Botão "Analisar Imagem"
+      // =========================================================
+      analyzeButton.addEventListener('click', async () => {
+        if (!currentFile || !currentUser) return;
+        
+        setUIState('loading-state'); // Mostra o loading
+
+        try {
+          // 1. Criar FormData e adicionar o arquivo
+          const formData = new FormData();
+          // 'image_file' deve ser o mesmo nome da chave em app.py
+          formData.append('image_file', currentFile); 
+
+          // 2. Enviar o arquivo para o backend (Flask) na nova rota
+          const response = await fetch('/process-image-upload', {
+            method: 'POST',
+            body: formData, // Envia o arquivo, não JSON
+          });
+          
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Falha na requisição ao servidor.');
+          }
+
+          // 3. Receber e mostrar os resultados
+          const data = await response.json();
+          displayResults(data.tags, data.description);
+
+        } catch (error) {
+          console.error('Erro no processo de análise:', error);
+          alert(`Houve um erro: ${error.message}`);
+          setUIState('file-selected'); // Volta para o estado anterior
+        }
+      });
+      
+      // Função para mostrar os resultados
+      function displayResults(tags, description) {
+        tagsContainer.innerHTML = ''; 
+        
+        tags.forEach(tag => {
+          const tagElement = document.createElement('span');
+          tagElement.className = 'tag-item';
+          tagElement.textContent = tag;
+          tagsContainer.appendChild(tagElement);
+        });
+
+        descriptionText.textContent = description || "Nenhuma descrição detalhada foi gerada.";
+        
+        setUIState('results-state');
+      }
+
+      // Evento do Botão "Nova Análise"
+      newAnalysisButton.addEventListener('click', () => {
+        setUIState('initial-state');
+        currentFile = null;
+        fileInput.value = ''; 
+        preview.src = '#';
+        analyzeButton.disabled = true;
+      });
+
+    </script>
+  </body>
 </html>
