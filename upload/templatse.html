@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnalisAI - Upload</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="upload-box">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Anaconda_Logo.png" class="logo" alt="Logo">
+      <h2>Faça o upload da sua imagem!</h2>
+
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="image" class="upload-area">
+          <div class="icon">&#128247;</div>
+          <span>Escolher arquivo</span>
+          <p>Ou arraste seu arquivo!</p>
+        </label>
+        <input type="file" name="image" id="image" accept="image/*" required>
+        <button type="submit">Analisar</button>
+      </form>
+
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+    const resultDiv = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+
+      const response = await fetch("/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    });
+  </script>
+</body>
+</html>
