@@ -1,435 +1,459 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
 }
 
 :root {
-    --primary-color: #1172ce;
-    --secondary-color: #143b61;
-    --accent-color: #ffc107;
-    --background-light: #f4f7f9;
-    --text-dark: #333333;
-    --text-light: #ffffff;
+  --primary-color: #1172ce;
+  --secondary-color: #143b61;
+  --accent-color: #ffc107;
+  --background-light: #f4f7f9;
+  --text-dark: #333333;
+  --text-light: #ffffff;
 }
 
 body {
-    background-color: var(--background-light);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  background-color: var(--background-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 #content {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-grow: 1;
-    padding: 0 0 50px 0;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-grow: 1;
+  padding: 0 0 50px 0;
 }
 
 h1,
 h2,
 h3 {
-    color: var(--secondary-color);
-    font-weight: 700;
+  color: var(--secondary-color);
+  font-weight: 700;
 }
 
 .highlightText {
-    color: var(--primary-color);
-    font-weight: 800;
+  color: var(--primary-color);
+  font-weight: 800;
 }
 
 .primaryButton,
 .secondaryButton {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
 }
 
 .primaryButton {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    box-shadow: 0 4px 10px rgba(17, 114, 206, 0.4);
+  background-color: var(--primary-color);
+  color: var(--text-light);
+  box-shadow: 0 4px 10px rgba(17, 114, 206, 0.4);
 }
 
 .primaryButton:hover {
-    background-color: #0d5aa9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(17, 114, 206, 0.6);
+  background-color: #0d5aa9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(17, 114, 206, 0.6);
 }
 
 .secondaryButton {
-    background-color: transparent;
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: 2px solid var(--secondary-color);
 }
 
 .secondaryButton:hover {
-    background-color: var(--secondary-color);
-    color: var(--text-light);
-    transform: scale(1.02);
+  background-color: var(--secondary-color);
+  color: var(--text-light);
+  transform: scale(1.02);
 }
 
 .headerAnalisAI {
-    background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  background-color: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: box-shadow 0.3s ease;
 }
 
 .navAnalisAI {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  transition: padding 0.3s ease;
 }
 
 .navItensLeft {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navItensLeft img {
-    height: 45px;
-    margin-right: 10px;
+  height: 45px;
+  margin-right: 10px;
+  transition: height 0.3s ease;
 }
 
 .navItensLeft h1 {
-    color: var(--secondary-color);
-    font-size: 2em;
-    font-weight: 800;
+  color: var(--secondary-color);
+  font-size: 2em;
+  font-weight: 800;
 }
 
 .navItensRight {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .navLink {
-    color: var(--secondary-color);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1em;
-    transition: color 0.3s;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1em;
+  transition: color 0.3s;
 }
 
 .navLink:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.headerAnalisAI.header-scrolled {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.headerAnalisAI.header-scrolled .navAnalisAI {
+  padding: 8px 0;
+}
+
+.headerAnalisAI.header-scrolled .navItensLeft img {
+  height: 35px;
 }
 
 #sectionHero {
-    display: flex;
-    align-items: center;
-    padding: 80px 0;
-    gap: 60px;
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+  gap: 60px;
 }
 
 .heroLeft {
-    flex: 1;
+  flex: 1;
 }
 
 .backgroundInfoInfo h2 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    line-height: 1.2;
+  font-size: 3em;
+  margin-bottom: 20px;
+  line-height: 1.2;
 }
 
 .backgroundInfoInfo p {
-    font-size: 1.2em;
-    line-height: 1.7;
-    color: var(--text-dark);
-    margin-bottom: 30px;
+  font-size: 1.2em;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 30px;
 }
 
 .heroButtons {
-    display: flex;
-    gap: 15px;
+  display: flex;
+  gap: 15px;
 }
 
 .heroRight {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .heroRight img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    animation: float 4s ease-in-out infinite;
+  max-width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: float 4s ease-in-out infinite;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(0px);
+  }
 
-    50% {
-        transform: translateY(-15px);
-    }
+  50% {
+    transform: translateY(-15px);
+  }
 
-    100% {
-        transform: translateY(0px);
-    }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 #sectionFeatures {
-    padding: 60px 0;
-    background-color: #ffffff;
-    border-radius: 15px;
-    margin-bottom: 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 60px 0;
+  background-color: #ffffff;
+  border-radius: 15px;
+  margin-bottom: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 .sectionHeader {
-    text-align: center;
-    margin-bottom: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .titleFeatures,
 .titleBenefits {
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
 
 .backgroundFeatures {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    padding: 0 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0 40px;
 }
 
 .featureCard {
-    flex: 1;
-    background-color: var(--background-light);
-    border: 1px solid #e0e0e0;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.3s ease;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1;
+  background-color: var(--background-light);
+  border: 1px solid #e0e0e0;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .featureCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(17, 114, 206, 0.1);
-    background-color: #eaf3fb;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(17, 114, 206, 0.1);
+  background-color: #eaf3fb;
 }
 
 .featureCard img {
-    height: 60px;
-    margin-bottom: 15px;
+  height: 60px;
+  margin-bottom: 15px;
 }
 
 .featureCard h3 {
-    font-size: 1.4em;
-    margin-bottom: 10px;
+  font-size: 1.4em;
+  margin-bottom: 10px;
 }
 
 .featureCard p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.6;
+  font-size: 1em;
+  color: #555;
+  line-height: 1.6;
 }
 
 #sectionBenefits {
-    padding: 50px 0;
+  padding: 50px 0;
 }
 
 .benefitsContent {
-    display: flex;
-    gap: 60px;
-    align-items: center;
+  display: flex;
+  gap: 60px;
+  align-items: center;
 }
 
 .sectionBenefitsLeft {
-    flex: 1.2;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .benefitCard {
-    background-color: #ffffff;
-    border: 2px solid var(--primary-color);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+  background-color: #ffffff;
+  border: 2px solid var(--primary-color);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 .benefitCard:hover {
-    border-color: var(--accent-color);
-    transform: translateX(5px);
+  border-color: var(--accent-color);
+  transform: translateX(5px);
 }
 
 .topBenefit {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .topBenefit img {
-    height: 40px;
-    margin-right: 15px;
+  height: 40px;
+  margin-right: 15px;
 }
 
 .benefitCard h3 {
-    font-size: 1.5em;
-    color: var(--primary-color);
+  font-size: 1.5em;
+  color: var(--primary-color);
 }
 
 .benefitCard p {
-    font-size: 1em;
-    line-height: 1.5;
-    padding-left: 55px;
-    color: #555;
+  font-size: 1em;
+  line-height: 1.5;
+  padding-left: 55px;
+  color: #555;
 }
 
 .sectionBenefitsRight {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .RightImageBenefits img {
-    max-width: 100%;
-    height: auto;
-    max-height: 500px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .footerAnalisAI {
-    width: 100%;
-    margin-top: auto;
-    background-color: var(--secondary-color);
+  width: 100%;
+  margin-top: auto;
+  background-color: var(--secondary-color);
 }
 
 .footerInfo {
-    width: 100%;
+  width: 100%;
 }
 
 .footerInfo img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .copyright {
-    background-color: #0d273f;
-    padding: 15px 0;
-    text-align: center;
+  background-color: #0d273f;
+  padding: 15px 0;
+  text-align: center;
 }
 
 .copyright p {
-    color: var(--text-light);
-    font-size: 0.9em;
+  color: var(--text-light);
+  font-size: 0.9em;
 }
 
 @media (max-width: 992px) {
-    #sectionHero {
-        flex-direction: column;
-        padding: 50px 0 30px 0;
-        text-align: center;
-    }
+  html {
+    scroll-padding-top: 80px;
+  }
 
-    .heroLeft,
-    .heroRight {
-        flex: none;
-        width: 100%;
-    }
+  #sectionHero {
+    flex-direction: column;
+    padding: 50px 0 30px 0;
+    text-align: center;
+  }
 
-    .heroRight {
-        order: -1;
-        margin-bottom: 30px;
-    }
+  .heroLeft,
+  .heroRight {
+    flex: none;
+    width: 100%;
+  }
 
-    .backgroundInfoInfo h2 {
-        font-size: 2.2em;
-    }
+  .heroRight {
+    order: -1;
+    margin-bottom: 30px;
+  }
 
-    .heroButtons {
-        justify-content: center;
-    }
+  .backgroundInfoInfo h2 {
+    font-size: 2.2em;
+  }
 
-    .navItensRight {
-        gap: 10px;
-    }
+  .heroButtons {
+    justify-content: center;
+  }
 
-    .navLink {
-        display: none;
-    }
+  .navItensRight {
+    gap: 10px;
+  }
 
-    .backgroundFeatures {
-        flex-direction: column;
-        padding: 0 20px;
-    }
+  .navLink {
+    display: none;
+  }
 
-    .featureCard {
-        min-height: auto;
-    }
+  .backgroundFeatures {
+    flex-direction: column;
+    padding: 0 20px;
+  }
 
-    .benefitsContent {
-        flex-direction: column;
-    }
+  .featureCard {
+    min-height: auto;
+  }
 
-    .sectionBenefitsLeft {
-        order: 1;
-        width: 100%;
-    }
+  .benefitsContent {
+    flex-direction: column;
+  }
 
-    .sectionBenefitsRight {
-        order: -1;
-        margin-bottom: 30px;
-    }
+  .sectionBenefitsLeft {
+    order: 1;
+    width: 100%;
+  }
+
+  .sectionBenefitsRight {
+    order: -1;
+    margin-bottom: 30px;
+  }
 }
 
 @media (max-width: 576px) {
-    .navItensLeft h1 {
-        font-size: 1.5em;
-    }
+  .navItensLeft h1 {
+    font-size: 1.5em;
+  }
 
-    .navItensLeft img {
-        height: 35px;
-    }
+  .navItensLeft img {
+    height: 35px;
+  }
 
-    .navAnalyticsButton {
-        padding: 8px 12px;
-    }
+  .navAnalyticsButton {
+    padding: 8px 12px;
+  }
 
-    .navLoginButton {
-        display: none;
-    }
+  .navLoginButton {
+    display: none;
+  }
 
-    .backgroundInfoInfo h2 {
-        font-size: 1.8em;
-    }
+  .backgroundInfoInfo h2 {
+    font-size: 1.8em;
+  }
 
-    .heroButtons {
-        flex-direction: column;
-    }
+  .heroButtons {
+    flex-direction: column;
+  }
 
-    .titleFeatures,
-    .titleBenefits {
-        font-size: 2em;
-    }
+  .titleFeatures,
+  .titleBenefits {
+    font-size: 2em;
+  }
 
-    .benefitCard p {
-        padding-left: 0;
-        text-align: left;
-    }
+  .benefitCard p {
+    padding-left: 0;
+    text-align: left;
+  }
 }

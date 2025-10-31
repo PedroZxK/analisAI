@@ -29,8 +29,8 @@
             <h1>AnalisAI</h1>
           </div>
           <div class="navItensRight">
-            <a href="#" class="navLink">Recursos</a>
-            <a href="#" class="navLink">Benefícios</a>
+            <a href="#sectionFeatures" class="navLink">Recursos</a>
+            <a href="#sectionBenefits" class="navLink">Benefícios</a>
 
             <a
               href="{{ url_for('cadastro') }}"
@@ -191,5 +191,16 @@
         <p>&copy; 2025 AnalisAI. Todos os direitos reservados.</p>
       </div>
     </footer>
+
+    <script>
+      window.addEventListener('scroll', function () {
+        const header = document.querySelector('.headerAnalisAI');
+        if (window.scrollY > 50) {
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.remove('header-scrolled');
+        }
+      });
+    </script>
   </body>
 </html>
