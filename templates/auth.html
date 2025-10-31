@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnalisAI - Autenticação</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='auth.css') }}"
+    />
+  </head>
+  <body>
+    <div
+      id="auth-container"
+      class="{% if initial_state == 'login' %}login-active{% endif %}"
+    >
+      <div class="form-wrapper">
+        <div class="form-panel" id="login-form">
+          <form method="POST">
+            <a href="{{ url_for('home') }}" class="auth-logo">
+              <img
+                src="{{ url_for('static', filename='img/logo.png') }}"
+                alt="Logo AnalisAI"
+              />
+              <span>AnalisAI</span>
+            </a>
+
+            <label for="login-email">E-mail:</label>
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              placeholder="Digite seu e-mail"
+              required
+            />
+
+            <label for="login-password">Senha:</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Digite sua senha"
+              required
+            />
+
+            <button type="submit" class="primaryButton">Entrar</button>
+
+            <div class="toggle-link">
+              Novo por aqui?
+              <a href="#" id="toggleToCadastro">Crie uma conta.</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-panel" id="cadastro-form">
+          <form method="POST">
+            <a href="{{ url_for('home') }}" class="auth-logo">
+              <img
+                src="{{ url_for('static', filename='img/logo.png') }}"
+                alt="Logo AnalisAI"
+              />
+              <span>AnalisAI</span>
+            </a>
+
+            <h1>Crie sua Conta</h1>
+            <p class="subheading">
+              Comece a transformar suas imagens em insights.
+            </p>
+
+            <label for="name">Nome:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Digite seu nome completo"
+              required
+            />
+
+            <label for="cadastro-email">E-mail:</label>
+            <input
+              type="email"
+              id="cadastro-email"
+              name="email"
+              placeholder="Digite seu melhor e-mail"
+              required
+            />
+
+            <label for="cadastro-password">Senha:</label>
+            <input
+              type="password"
+              id="cadastro-password"
+              name="password"
+              placeholder="Crie uma senha forte"
+              required
+            />
+
+            <button type="submit" class="primaryButton">
+              Finalizar Cadastro
+            </button>
+
+            <div class="toggle-link">
+              Já tem uma conta?
+              <a href="#" id="toggleToLogin">Entre aqui.</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="image-panel" id="image-panel">
+        <img
+          src="{{ url_for('static', filename='img/techBrain.png') }}"
+          alt="Cérebro de Tecnologia"
+        />
+        <h2>Insights Visuais na Velocidade da IA</h2>
+        <p>
+          Nossa plataforma analisa, categoriza e extrai dados valiosos de
+          qualquer imagem.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      const authContainer = document.getElementById('auth-container');
+      const toggleToLogin = document.getElementById('toggleToLogin');
+      const toggleToCadastro = document.getElementById('toggleToCadastro');
+
+      toggleToLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        authContainer.classList.add('login-active');
+      });
+
+      toggleToCadastro.addEventListener('click', (e) => {
+        e.preventDefault();
+        authContainer.classList.remove('login-active');
+      });
+    </script>
+  </body>
+</html>

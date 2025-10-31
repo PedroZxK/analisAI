@@ -31,10 +31,19 @@
           <div class="navItensRight">
             <a href="#" class="navLink">Recursos</a>
             <a href="#" class="navLink">Benefícios</a>
-            <button class="navAnalyticsButton primaryButton">
+
+            <a
+              href="{{ url_for('cadastro') }}"
+              class="navAnalyticsButton primaryButton"
+            >
               Faça sua Análise
-            </button>
-            <button class="navLoginButton secondaryButton">Entre</button>
+            </a>
+
+            <a
+              href="{{ url_for('login') }}"
+              class="navLoginButton secondaryButton"
+              >Entre</a
+            >
           </div>
         </nav>
       </div>
@@ -51,13 +60,17 @@
             <p>
               A AnalisAI é a plataforma definitiva de análise de imagens. Usamos
               inteligência artificial de ponta para oferecer
-              **identificação automática de elementos**, **geração de tags
-              inteligentes** e insights visuais rápidos e precisos.
+              <strong>identificação automática de elementos</strong>,
+              <strong>geração de tags inteligentes</strong> e insights visuais
+              rápidos e precisos.
             </p>
             <div class="heroButtons">
-              <button class="primaryButton callToAction">
+              <a
+                href="{{ url_for('cadastro') }}"
+                class="primaryButton callToAction"
+              >
                 Comece a Analisar Agora!
-              </button>
+              </a>
               <button class="secondaryButton">Saiba Mais</button>
             </div>
           </div>
@@ -97,9 +110,9 @@
             />
             <h3>Sugestões Inteligentes de Contexto</h3>
             <p>
-              Receba recomendações inteligentes baseadas no contexto da
-              imagem. Nossa IA aprende com seus padrões para aprimorar e refinar
-              seus resultados de análise automaticamente.
+              Receba recomendações inteligentes baseadas no contexto da imagem.
+              Nossa IA aprende com seus padrões para aprimorar e refinar seus
+              resultados de análise automaticamente.
             </p>
           </div>
           <div class="featureCard">
@@ -109,8 +122,8 @@
             />
             <h3>Insights Acionáveis e Detalhados</h3>
             <p>
-              Explore insights detalhados sobre suas imagens. Descubra
-              padrões, tendências e informações que impulsionam decisões mais
+              Explore insights detalhados sobre suas imagens. Descubra padrões,
+              tendências e informações que impulsionam decisões mais
               estratégicas e embasadas em dados visuais.
             </p>
           </div>
